@@ -1,0 +1,8 @@
+"use client";
+import { useEffect, useState } from "react";
+import { factions, factionKeys, type WorldEvent } from "@/lib/world";
+export default function ChroniclePage() {
+  const [events,setEvents]=useState<WorldEvent[]>([]);const [faction,setFaction]=useState("all");const [state,setState]=useState("loading");
+  useEffect(()=>{let active=true;fetch(`/api/chronicle?faction=${faction}`,{cache:"no-store"}).then(r=>r.json()).then(d=>{if(active){setEvents(d.events??[]);setState(d.configured?"ready":"offline");}}).catch(()=>{if(active)setState("error")});return()=>{active=false}},[faction]);
+  return <main className="inner-page"><div className="page-heading"><div><p className="eyebrow">PUBLIC RECORD / CHRONICLE</p><h1>WHAT HAPPENED</h1><p>Only persisted actions appear here. Deterministic simulation is labeled as such.</p></div></div><div className="filter-row"><button className={faction==="all"?"active":""} onClick={()=>setFaction("all")}>All factions</button>{factionKeys.map(key=><button className={faction===key?"active":""} key={key} onClick={()=>setFaction(key)}>{factions[key].name}</button>)}</div><div className="chronicle-list">{events.map(e=><article className="chronicle-entry" key={e.id}><span className={`event-dot ${e.faction??""}`}/><div><span className="entry-meta">{e.faction?.toUpperCase()??"ISLAND"} / {e.kind.toUpperCase()} / {e.provenance.replaceAll("_"," ").toUpperCase()}</span><h2>{e.description}</h2><time>{new Date(e.created_at).toLocaleString()}</time></div></article>)}{!events.length&&<p className="empty-note">{state==="offline"?"Chronicle is offline until the world database is configured.":state==="error"?"Chronicle could not load.":"No recorded events in this filter yet."}</p>}</div></main>;
+}

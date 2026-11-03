@@ -1,0 +1,5 @@
+import { NextResponse } from "next/server";
+import { z } from "zod";
+import { adminDb, requestUser } from "@/lib/supabase";
+type Context={params:Promise<{id:string}>};
+export async function GET(request:Request,{params}:Context){const user=await requestUser(request);if(!user)return NextResponse.json({error:"Sign in required"},{status:401});const {id}=await params;if(!z.uuid().safeParse(id).success)return NextResponse.json({error:"Invalid order"},{status:400});const db=adminDb();const {data:order,error}=await db.from("service_orders").select("id,status,service_key,gross_usdc,platform_fee_usdc,created_at").eq("id",id).eq("user_id",user.id).maybeSingle();if(error)return NextResponse.json({error:"Order unavailable"},{status:503});if(!order)return NextResponse.json({error:"Order not found"},{status:404});const {data:delivery}=await db.from("service_deliveries").select("output_text,delivered_at").eq("order_id",id).maybeSingle();const {data:receipt}=await db.from("x402_receipts").select("transaction_signature,verified_at").eq("order_id",id).maybeSingle();return NextResponse.json({order,delivery,receipt})}
