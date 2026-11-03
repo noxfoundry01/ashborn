@@ -4,11 +4,11 @@
 
 - [x] M0: inspect the handoff, approved art, and LANDVILLE archive read-only; establish a new codebase.
 - [x] M1: responsive cinematic landing, faction guide, accessible island, and honest Chronicle shell. Verified locally.
-- [ ] M2: email OTP authentication, profile/faction identity, Soul Core creation and owner-only revision, persistent agent state, and public chat. Code built; live Supabase verification pending.
-- [ ] M3: deterministic server ticks, three leaders and 27 residents, action provenance, jobs, memory, and a constrained model decision loop. Code built; database and scheduled execution pending.
+- [ ] M2: email OTP authentication, profile/faction identity, Soul Core creation and owner-only revision, persistent agent state, and public chat. Schema is live; hosted Auth and multi-user checks pending.
+- [ ] M3: deterministic server ticks, three leaders and 27 residents, action provenance, jobs, memory, and a constrained model decision loop. Database tick and retry verified; recurring schedule and model decisions pending.
 - [ ] M4: optional Solana wallet, devnet token quote and signed burn receipt; mainnet disabled by configuration. Code built; funded devnet test pending.
 - [ ] M5: x402 V2 Solana USDC devnet paid service, receipt verification, idempotent fulfillment, fee ledger, and operator proposal queue. Code built; facilitator and payment test pending.
-- [ ] M6: accessibility, security, performance, E2E, deployment and operational hardening. Readiness endpoint, worker auth and deployment guide built; hosted checks pending.
+- [ ] M6: accessibility, security, performance, E2E, deployment and operational hardening. Database grants, RLS, advisor checks and indexes verified; hosted checks pending.
 
 ## Architecture
 

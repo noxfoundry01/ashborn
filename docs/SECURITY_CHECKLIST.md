@@ -1,6 +1,6 @@
 # Security checklist
 
-- [ ] Every public-schema table has RLS and least-privilege grants/policies; verify against a real database.
+- [x] All 29 application tables in the dedicated project have RLS. Explicit Data API grants permit public identity/world/chat reads, authenticated owner reads and reported chat inserts; six server-only tables intentionally have no public policies. Live privilege queries and the security advisor confirmed no remaining warnings.
 - [ ] Auth uses verified email identity, server-side session checks, safe redirects and no user metadata for authorization.
 - [ ] Profile, agent and chat writes validate Zod schemas, ownership and rate limits.
 - [ ] Soul Core revisions are owner-only, versioned and rate limited; public events omit private motivation. Verify against Supabase RLS.

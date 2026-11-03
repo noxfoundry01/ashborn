@@ -18,10 +18,11 @@ Updated: 2026-11-03 (Europe/Madrid)
 ## Built in the latest phase
 
 - `lib/worker-auth.ts`, `app/api/internal/{tick,deliberate}/route.ts`: exact bearer checking, authenticated POST scheduler and GET Vercel Cron entry points. Leader model calls run concurrently within a capped request.
-- `supabase/migrations/20261103200000_chat_provenance.sql`, `app/api/chat/route.ts`, `app/chat/page.tsx`: stored chat origin and deterministic shift reports from persisted agent jobs.
+- `supabase/migrations/20261103055346_chat_provenance.sql`, `app/api/chat/route.ts`, `app/chat/page.tsx`: stored chat origin and deterministic shift reports from persisted agent jobs.
 - `app/api/health/route.ts`, `docs/DEPLOYMENT.md`: database readiness probe and concrete Vercel/Supabase setup, including Hobby scheduler limits.
-- `supabase/migrations/20261103201000_soul_revision.sql`, `app/api/agents/[id]/soul/route.ts`, `app/agents/[id]/page.tsx`: private Soul Core editor, atomic revision history, per-day limit and a public Chronicle entry that omits private guidance.
-- `supabase/migrations/20261103202000_supabase_cron_entry.sql`, `supabase/optional/enable_world_cron.sql`, `supabase/optional/disable_world_cron.sql`: optional five-minute database scheduler that respects `system_controls.world_paused`. It is not active until manually enabled.
+- `supabase/migrations/20261103055348_soul_revision.sql`, `app/api/agents/[id]/soul/route.ts`, `app/agents/[id]/page.tsx`: private Soul Core editor, atomic revision history, per-day limit and a public Chronicle entry that omits private guidance.
+- `supabase/migrations/20261103055349_supabase_cron_entry.sql`, `supabase/optional/enable_world_cron.sql`, `supabase/optional/disable_world_cron.sql`: optional five-minute database scheduler that respects `system_controls.world_paused`. It is not active until manually enabled.
+- `supabase/migrations/20261103055507_security_indexes.sql` and `20261103055716_table_grants.sql`: revoke public execution of the project-installed RLS event trigger, cover 17 foreign keys, and restrict Data API grants to intended tables and roles.
 
 ## Verification completed
 
@@ -30,12 +31,16 @@ Updated: 2026-11-03 (Europe/Madrid)
 - `npm audit --omit=dev` reports **0 production vulnerabilities** after replacing the legacy SPL Token package.
 - Browser QA previously confirmed landing/map rendering, landmark selection, mobile width without overflow and disabled Exchange messaging; no browser console error in that pass.
 - Local API smoke checks: offline world endpoint responds, credit config reports disabled, x402 route returns 503 while disabled, unauthorized worker returns 403.
+- Dedicated Supabase project `cmfxfnuyczxmbwvamdxo` is active. All 14 migrations were applied through the connected account. Local migration filenames now match the remote migration versions; the 12 originally prepared SQL bodies were not altered.
+- Live database checks: 29 public tables all have RLS; 30 seeded agents, Soul Cores, goals and skills; finance and x402 pause flags are true. Public chat/world reads and private authenticated reads have explicit grants; anonymous Soul, control and chat-write grants are absent. All three Realtime tables are published.
+- One manual world tick completed with 30 jobs, 9 deterministic Chronicle events and 3 leader memories. Retrying the same slot returned 0. Supabase Cron is not installed or scheduled yet.
+- Security advisor has no warnings after hardening. Its six informational policyless-table notices are intentional server-only tables. The performance advisor reports only unused indexes on this fresh database.
 
 ## Integration gates
 
-1. The owner is preparing the repository, Vercel and Supabase. No external ASHBORN project was created by this work. When ready, apply `supabase/migrations/*.sql` in filename order to a dedicated project, then test RLS and SQL functions against that database. No migration has been run against a real database yet.
-2. Configure Auth URLs and email delivery; verify signup, OTP callback, profile, Soul Core creation and revision, chat Realtime, report submission and multi-user isolation.
-3. Enable Supabase Cron manually after database verification, or configure an authenticated HTTP scheduler. Vercel Hobby cannot run a five-minute cron. Run ticks and leader decisions over time, check retry and pause behavior and inspect Chronicle/chat provenance.
+1. Supabase schema is live in the dedicated Ashborn project. Configure Vercel `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` and server-only `SUPABASE_SERVICE_ROLE_KEY`, then verify `/api/health`. The service-role key must be entered in Vercel directly, not in Git or chat.
+2. Configure Auth Site URL and redirect URLs plus email delivery; verify signup, OTP callback, profile, Soul Core creation and revision, chat Realtime, report submission and multi-user isolation.
+3. Enable Supabase Cron manually after hosted Auth verification, or configure an authenticated HTTP scheduler. Vercel Hobby cannot run a five-minute cron. Run ticks and leader decisions over time, check retry and pause behavior and inspect Chronicle/chat provenance.
 4. Supply the approved **devnet** token mint, decimals, token price, burn share and any treasury token account. Test wallet signing and one-time settlement with a funded devnet wallet before enabling purchases.
 5. Supply devnet USDC mint, recipient associated token account, price and x402 facilitator. Test a real payment, duplicate payment handling, delivery and fee ledger before enabling orders.
 6. Run browser E2E, accessibility and deployment checks in a Node 24+ environment. The development machine currently uses Node 22; the app builds here, but `@solana-program/stake` declares Node 24+.

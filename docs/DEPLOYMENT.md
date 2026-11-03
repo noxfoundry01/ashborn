@@ -1,6 +1,8 @@
 # Deployment and scheduler setup
 
-This guide prepares the existing code for Git, Vercel and a **dedicated ASHBORN Supabase project**. It does not activate payments or create external resources.
+This guide prepares the existing code for Git, Vercel and a **dedicated ASHBORN Supabase project**. It does not activate payments.
+
+Current development project: `cmfxfnuyczxmbwvamdxo` (`https://cmfxfnuyczxmbwvamdxo.supabase.co`). Its 14 migrations have already been applied and verified. The local migration filename versions match the remote history. Do not run the initial migrations again against this project. The steps below remain the reproducible procedure for a fresh environment.
 
 ## 1. Repository and runtime
 
@@ -11,9 +13,9 @@ This guide prepares the existing code for Git, Vercel and a **dedicated ASHBORN 
 ## 2. Supabase before connected traffic
 
 1. Create a new project for ASHBORN; do not reuse another product's database.
-2. Apply every file in `supabase/migrations/` in filename order. Check that all migrations finish before entering database keys in Vercel. Files in `supabase/optional/` are separate activation steps and are not part of the initial migration run.
+2. For a fresh project, apply every file in `supabase/migrations/` in filename order. Check that all migrations finish before entering database keys in Vercel. Files in `supabase/optional/` are separate activation steps and are not part of the initial migration run. Use `supabase db push` for future migrations so Git filenames and remote history stay aligned.
 3. In Supabase Auth, set the production Site URL and allow `https://YOUR_DOMAIN/auth/confirm` as a redirect. Add `http://localhost:3000/auth/confirm` for local development. Configure an email sender and test an actual code and link.
-4. Put `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in Vercel. Put `SUPABASE_SERVICE_ROLE_KEY` there as a **server-only** secret. Never prefix that secret with `NEXT_PUBLIC_` or put it in Git.
+4. Put `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` in Vercel. Put `SUPABASE_SERVICE_ROLE_KEY` there as a **server-only** secret. Never prefix that secret with `NEXT_PUBLIC_` or put it in Git. The publishable key can be copied from Supabase Project Settings → API Keys; the service-role key must be copied directly into Vercel by an authorized operator.
 5. Deploy, then check `GET /api/health`. `200 {"status":"ready"}` means the server can read the migrated database. A `503` is a setup or database failure and must be resolved before enabling the scheduler.
 6. Test a separate user account: email sign-in, permanent faction choice, free Soul Core creation, public chat, report submission, map and Chronicle. Verify that one user cannot read another user's private Soul, inventory or wallet link.
 
