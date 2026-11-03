@@ -35,11 +35,12 @@ Updated: 2026-11-03 (Europe/Madrid)
 - Live database checks: 29 public tables all have RLS; 30 seeded agents, Soul Cores, goals and skills; finance and x402 pause flags are true. Public chat/world reads and private authenticated reads have explicit grants; anonymous Soul, control and chat-write grants are absent. All three Realtime tables are published.
 - One manual world tick completed with 30 jobs, 9 deterministic Chronicle events and 3 leader memories. Retrying the same slot returned 0. Supabase Cron is not installed or scheduled yet.
 - Security advisor has no warnings after hardening. Its six informational policyless-table notices are intentional server-only tables. The performance advisor reports only unused indexes on this fresh database.
+- Vercel production deployment at `https://ashborn-five.vercel.app/` serves the landing and island (`200`). Hosted `/api/health` returns `200 {"status":"ready"}`; `/api/world` reads persisted agents and `/api/chat` is configured. Anonymous profile and agent APIs return `401`, the unsigned worker route returns `403`, and credit configuration remains disabled on devnet. GitHub reports the deployment status as successful for commit `e3e8276`.
 
 ## Integration gates
 
-1. Supabase schema is live in the dedicated Ashborn project. Configure Vercel `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` and server-only `SUPABASE_SERVICE_ROLE_KEY`, then verify `/api/health`. The service-role key must be entered in Vercel directly, not in Git or chat.
-2. Configure Auth Site URL and redirect URLs plus email delivery; verify signup, OTP callback, profile, Soul Core creation and revision, chat Realtime, report submission and multi-user isolation.
+1. Supabase schema is live and Vercel database configuration passes `/api/health`. Keep the server key in Vercel only; do not put it in Git or chat.
+2. Set Supabase Auth Site URL to `https://ashborn-five.vercel.app` and add exact redirect `https://ashborn-five.vercel.app/auth/confirm`, plus `http://localhost:3000/auth/confirm` for development. Verify email delivery, signup, OTP callback, profile, Soul Core creation and revision, chat Realtime, report submission and multi-user isolation.
 3. Enable Supabase Cron manually after hosted Auth verification, or configure an authenticated HTTP scheduler. Vercel Hobby cannot run a five-minute cron. Run ticks and leader decisions over time, check retry and pause behavior and inspect Chronicle/chat provenance.
 4. Supply the approved **devnet** token mint, decimals, token price, burn share and any treasury token account. Test wallet signing and one-time settlement with a funded devnet wallet before enabling purchases.
 5. Supply devnet USDC mint, recipient associated token account, price and x402 facilitator. Test a real payment, duplicate payment handling, delivery and fee ledger before enabling orders.

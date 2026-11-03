@@ -8,7 +8,7 @@
 - [ ] M3: deterministic server ticks, three leaders and 27 residents, action provenance, jobs, memory, and a constrained model decision loop. Database tick and retry verified; recurring schedule and model decisions pending.
 - [ ] M4: optional Solana wallet, devnet token quote and signed burn receipt; mainnet disabled by configuration. Code built; funded devnet test pending.
 - [ ] M5: x402 V2 Solana USDC devnet paid service, receipt verification, idempotent fulfillment, fee ledger, and operator proposal queue. Code built; facilitator and payment test pending.
-- [ ] M6: accessibility, security, performance, E2E, deployment and operational hardening. Database grants, RLS, advisor checks and indexes verified; hosted checks pending.
+- [ ] M6: accessibility, security, performance, E2E, deployment and operational hardening. Database grants, RLS, advisor checks and indexes verified; production deployment and anonymous route checks pass; hosted Auth and E2E pending.
 
 ## Architecture
 

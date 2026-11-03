@@ -4,6 +4,8 @@ This guide prepares the existing code for Git, Vercel and a **dedicated ASHBORN 
 
 Current development project: `cmfxfnuyczxmbwvamdxo` (`https://cmfxfnuyczxmbwvamdxo.supabase.co`). Its 14 migrations have already been applied and verified. The local migration filename versions match the remote history. Do not run the initial migrations again against this project. The steps below remain the reproducible procedure for a fresh environment.
 
+Current Vercel production URL: `https://ashborn-five.vercel.app/`. Its health endpoint returned `200 {"status":"ready"}` on 2026-11-03. Auth redirect and a full sign-in are still pending verification.
+
 ## 1. Repository and runtime
 
 - Push the application at the workspace root. The handoff folder and local secrets are ignored by `.gitignore`.
