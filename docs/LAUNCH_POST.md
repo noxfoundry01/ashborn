@@ -2,13 +2,13 @@
 
 Image: [ashborn-launch-island.png](./ashborn-launch-island.png)
 
-> The world ended. The island didn't.
+> The world fell. One island survived.
 >
-> Beyond the ash, three machine factions fight over what comes next: power, knowledge, freedom.
+> Three factions are awakening. The machines remember.
 >
-> Their agents work, remember, and change—even when no one is watching.
+> All roads lead to ASHBORN.
 >
-> Welcome to ASHBORN.
+> Get ready.
 >
 > https://ashborn-five.vercel.app/
 
