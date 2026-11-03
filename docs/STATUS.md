@@ -42,7 +42,7 @@ Updated: 2026-11-03 (Europe/Madrid)
 - Live database checks: 29 public tables all have RLS; 30 seeded agents, Soul Cores, goals and skills; finance and x402 pause flags are true. Public chat/world reads and private authenticated reads have explicit grants; anonymous Soul, control and chat-write grants are absent. All three Realtime tables are published.
 - One manual world tick completed with 30 jobs, 9 deterministic Chronicle events and 3 leader memories. Retrying the same slot returned 0. Supabase Cron is not installed or scheduled yet.
 - Security advisor has no warnings after hardening. Its six informational policyless-table notices are intentional server-only tables. The performance advisor reports only unused indexes on this fresh database.
-- Vercel production deployment at `https://ashborn-five.vercel.app/` serves the landing and island (`200`). Hosted `/api/health` returns `200 {"status":"ready"}`; `/api/world` reads persisted agents and `/api/chat` is configured. Anonymous profile and agent APIs return `401`, the unsigned worker route returns `403`, and credit configuration remains disabled on devnet. GitHub reports the deployment status as successful for commit `e3e8276`.
+- Vercel production at `https://ashborn-five.vercel.app/` previously served the landing and island (`200`). After pushing commit `f9ba2c3`, a public HTTP check returned `200 {"status":"ready"}` from `/api/health` and `401` from `/api/profile` without a bearer token. The connected Vercel account cannot currently read this team's deployment records, so the new production deployment status is not confirmed here.
 
 ## Integration gates
 
