@@ -11,10 +11,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 # Codex agent instructions for ASHBORN
 
 1. Read `CODEX_START_HERE.md`, this file, and EVERY document in `docs/` before coding. Continue through actual implementation; documentation alone is not completion.
-2. The product is **ASHBORN**. `references/VILLE-main.zip` is a READ-ONLY LANDVILLE architectural reference, not a source template. Start a clean app; never overwrite or build inside that archive.
+2. The product is **ASHBORN**. Any architecture archive under `references/` is read-only, never a source template. Keep application code at the repository root and do not copy archived product assets or text.
 3. Brand: `assets/ashborn-approved-logo.png` is approved by the owner. Use it. All other art is conceptual reference; build an original, polished, functional interactive island.
 4. Build an honest vertical slice: lore landing → email auth → profile → faction → agent creation/Soul Core → persistent simulation → world map → realtime chat with agent labels → Chronicle. Then wallet/token/devnet and x402 foundations, gated until secure.
 5. Track progress and verification in `docs/STATUS.md` and `docs/IMPLEMENTATION_PLAN.md`. Do not claim functionality that is mocked, not tested, or missing credentials.
 6. Public UI copy is English, very readable, concise; emphasize simple navigation and discoverable interactions. No fake figures, dead buttons, invented contract addresses, or fake transaction confirmations.
 7. No actual mainnet token mint, market trades, or movement of user assets without explicit authorization. Use configuration, testnets, signing approvals, rate limits, pause/revoke controls and proper accounting.
-8. Visually: premium cinematic 2.5D sci-fi, realistic terrain/materials, industrial post-human island. Absolutely not LANDVILLE cartoon aesthetic or generic AI dashboard.
+8. Visually: premium cinematic 2.5D sci-fi, realistic terrain/materials, industrial post-human island. Avoid cartoon aesthetics and generic AI dashboards.

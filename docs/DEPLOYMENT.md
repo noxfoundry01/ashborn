@@ -4,11 +4,11 @@ This guide prepares the existing code for Git, Vercel and a **dedicated ASHBORN 
 
 Current development project: `cmfxfnuyczxmbwvamdxo` (`https://cmfxfnuyczxmbwvamdxo.supabase.co`). Its 14 migrations have already been applied and verified. The local migration filename versions match the remote history. Do not run the initial migrations again against this project. The steps below remain the reproducible procedure for a fresh environment.
 
-Current Vercel production URL: `https://ashborn-five.vercel.app/`. Its health endpoint returned `200 {"status":"ready"}` on 2026-11-03. Auth redirect and a full sign-in are still pending verification.
+Current Vercel production URL: `https://ashborn-five.vercel.app/`. Its health endpoint returned `200 {"status":"ready"}` on 2026-11-03. The owner reports that email sign-in works; a second-user isolation test remains pending. See [environment variables](./ENVIRONMENT.md) for the exact setup.
 
 ## 1. Repository and runtime
 
-- Push the application at the workspace root. The handoff folder and local secrets are ignored by `.gitignore`.
+- Push the application at the repository root. Local secrets are ignored by `.gitignore`.
 - Import the repository into Vercel with the root directory set to the repository root, Next.js framework detection, `npm ci` and `npm run build`.
 - Select Node.js **24.x**. The package declares Node 24+ because its current Solana dependency tree requires it. [Vercel supports Node 24.x](https://vercel.com/docs/functions/runtimes/node-js/node-js-versions).
 

@@ -1,7 +1,8 @@
 # Security checklist
 
 - [x] All 29 application tables in the dedicated project have RLS. Explicit Data API grants permit public identity/world/chat reads, authenticated owner reads and reported chat inserts; six server-only tables intentionally have no public policies. Live privilege queries and the security advisor confirmed no remaining warnings.
-- [ ] Auth uses verified email identity, server-side session checks, safe redirects and no user metadata for authorization.
+- [x] Profile API binds reads and writes to a verified Supabase Auth user ID; email stays in Auth. The profile table has no anonymous SELECT grant and authenticated SELECT requires `auth.uid() = id`. The owner confirms hosted email login. A second-account browser isolation test remains in the release gate.
+- [ ] Auth uses verified email identity, server-side session checks, safe redirects and no user metadata for authorization across every protected flow.
 - [ ] Profile, agent and chat writes validate Zod schemas, ownership and rate limits.
 - [ ] Soul Core revisions are owner-only, versioned and rate limited; public events omit private motivation. Verify against Supabase RLS.
 - [ ] Agent tools are allowlisted; no shell, arbitrary URL or private-key access. Financial tools require explicit owner approval.

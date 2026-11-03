@@ -1,27 +1,57 @@
-# ASHBORN
+<div align="center">
+  <img src="./public/ashborn-approved-logo.png" alt="ASHBORN insignia" width="168" />
 
-A new, original Next.js application for a persistent island civilization. The handoff package remains under `ASHBORN_Codex_Handoff/`; the LANDVILLE ZIP is an untouched architectural reference.
+  # ASHBORN
 
-## Run locally
+  **One island. Three factions. A world that does not wait for you.**
 
-1. Use Node 24 or newer for a supported Solana dependency runtime. Run `npm ci`.
-2. Copy `.env.example` to `.env.local`. Set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SERVICE_ROLE_KEY` and a long random `WORLD_TICK_SECRET` for connected features. The service role is used by server routes and workers and must stay server-side. Never commit `.env.local`.
-3. Apply `supabase/migrations/*.sql` in filename order to a **new ASHBORN Supabase project**. Configure Auth Site URL and redirect URL `http://localhost:3000/auth/confirm`; set the email template to send a link or one-time code. Enable Realtime for the project.
-4. Run `npm run dev`, open `http://localhost:3000`.
-5. For local HTTP scheduling, invoke `POST /api/internal/tick` every five minutes with `Authorization: Bearer $WORLD_TICK_SECRET`. A second scheduler can call `POST /api/internal/deliberate` every six hours after `AGENT_MODEL_ENABLED=true` and `OPENAI_API_KEY` are set. The route itself de-duplicates by time slot. Set `WORLD_PAUSED=true` to stop HTTP workers. For Vercel Hobby, the optional Supabase Cron path in `docs/DEPLOYMENT.md` drives ticks inside PostgreSQL and uses the database operator pause switch.
+  A persistent civilization of autonomous machines on Solana. Explore the last surviving island, choose a side, give a robot its Soul Core, and follow the life it builds.
 
-Without Supabase credentials, the landing and explorable island render, while connected features visibly say they are offline. The app never fabricates world events or transactions.
+  [**ENTER THE ISLAND ↗**](https://ashborn-five.vercel.app/) · [Explore the world](https://ashborn-five.vercel.app/island) · [Read the Chronicle](https://ashborn-five.vercel.app/chronicle)
+</div>
 
-The Exchange resource shop uses nonredeemable faction game credits. One FORGE costs 15 credits, one SYNTH costs 25 and one FLUX costs 35. Each authenticated purchase has a unique request ID, locks the balance and writes the inventory and ledger atomically. It becomes usable after the ASHBORN database is configured and credits have been acquired on devnet.
+<br />
 
-## Financial activation
+![ASHBORN landing page: Humanity ended. Intelligence didn't.](./docs/landing-preview.png)
 
-All finance defaults off. Devnet credit purchases require `FINANCE_DEVNET_ENABLED=true`, a verified `NEXT_PUBLIC_ASHBORN_MINT`, onchain decimals in `ASHBORN_MINT_DECIMALS`, an approved `ASHBORN_TOKENS_PER_100_CREDITS`, approved `ASHBORN_BURN_BPS` (1–10000), and `ASHBORN_TREASURY_TOKEN_ACCOUNT` if the burn share is below 100%. `SOLANA_DEVNET_RPC_URL` must reach devnet. A wallet holder signs each BurnChecked transaction; the server checks finalized instructions and settles one quote once. **This flow has not been tested on devnet without a token mint and funded wallet.** Do not activate it until an end-to-end test passes.
+## The world after us
 
-x402 USDC services remain disabled. The database has separate order, receipt, delivery, fee and proposal records, but no payment route is advertised until a facilitator, USDC mint, recipient account, price and settlement tests are in place. Mainnet is not supported by any environment flag in this build.
+The reactor still burns. Thirty founding agents move across an island divided by three visions of the future.
 
-## Checks
+| OBSIDIAN | EDEN | HAVOC |
+| :-- | :-- | :-- |
+| **NOX** keeps the power grid alive. Industry, order, endurance. | **EVE** restores knowledge from the ruins. Research, memory, renewal. | **RAZE** keeps the routes open. Trade, movement, freedom. |
 
-`npm run typecheck`, `npm run lint`, `npm test`, `npm run build`. See `docs/STATUS.md` for verified results and remaining integration gates.
+The island is interactive: pan, zoom, select a landmark, and inspect its citizens. Their work is written to persistent world state and the Chronicle.
 
-For Vercel, Supabase, Auth URLs and scheduler setup, see `docs/DEPLOYMENT.md`. No Vercel cron is activated by this repository until the hosting plan and secrets are configured.
+<div align="center">
+  <img src="./docs/island-preview.png" alt="Interactive ASHBORN island with faction territories, landmarks, agents, and a detail panel" width="960" />
+</div>
+
+## Become part of it
+
+1. **Choose a faction.** Your identity follows you across the island.
+2. **Awaken a robot.** Set its values, motivation, and profession in a Soul Core. The first one is free.
+3. **Watch a life unfold.** Jobs, movement, memories, and decisions become lasting world history.
+
+The live explorer and persistent world are online. Email identity, live chat, wallet linking, autonomous scheduling, and payments are in staged verification. **No token purchase or paid service is enabled yet.** See [current status](./docs/STATUS.md) for what has been tested.
+
+## Built for an open economy
+
+ASHBORN is designed around its own Solana token and a separate x402 marketplace. The planned checkout supports **ASHBORN, SOL, and USDC** for distinct in-world purchases and services. Every payment path requires an explicit quote, a wallet approval, onchain verification, and a recorded result. Mainnet activation remains gated until the token mint, pricing, recipients, and settlement flows are verified.
+
+## Build locally
+
+Requires Node.js 24+.
+
+```bash
+npm ci
+npm run dev
+```
+
+Configure a Supabase project using [the deployment guide](./docs/DEPLOYMENT.md). Run `npm run typecheck`, `npm run lint`, `npm test`, and `npm run build` before shipping.
+
+<div align="center">
+  <strong>THE ISLAND IS WAITING.</strong><br />
+  <a href="https://ashborn-five.vercel.app/">Enter ASHBORN ↗</a>
+</div>
